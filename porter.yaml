@@ -21,22 +21,21 @@ install:
       description: "Install Hello World"
       command: bash
       flags:
-        c: echo Hello World
+        c: '"echo Hello World"'
 
 upgrade:
   - exec:
       description: "World 2.0"
       command: bash
       flags:
-        c: echo World 2.0
+        c: '"echo World 2.0"'
 
 uninstall:
   - exec:
       description: "Uninstall Hello World"
       command: bash
       flags:
-        c: echo Goodbye World
-
+        c: '"echo Goodbye World"'
 
 # See https://porter.sh/author-bundles/#dependencies
 #dependencies:
