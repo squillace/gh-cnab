@@ -43,6 +43,19 @@ jobs:
     - name: Pull in jq mixin
       run: porter mixins install jq --url https://github.com/squillace/porter-jq/releases/download --version v0.1.0
     - uses: azure/docker-login@v1
+      name: GHCR.IO Login
+      with:
+        login-server: ghcr.io
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.GHCR_PASSWORD }}
+    - name: Porter Publish
+      run: porter publish  
+    
+    - name: Retag bundle for Docker Hub
+      run: |
+        sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
+
+    - uses: azure/docker-login@v1
       name: Docker Login
       with:
         login-server: ghcr.io
@@ -50,3 +63,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Porter Publish
       run: porter publish  
+
