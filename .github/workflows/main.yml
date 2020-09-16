@@ -36,6 +36,7 @@ jobs:
     - name: Retag bundle for Docker Hub
       run: |
         sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
+        docker logout
 
     - uses: azure/docker-login@v1
       name: Docker Login
