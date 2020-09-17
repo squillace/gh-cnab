@@ -33,6 +33,7 @@ jobs:
         run: |
           sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
           grep "tag" porter.yaml
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
 
