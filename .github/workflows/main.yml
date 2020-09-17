@@ -29,8 +29,6 @@ jobs:
         uses: deislabs/porter-gh-action@v0.1.1
       - name: Porter Publish
         run: porter publish  
-
-      - uses: actions/checkout@v1
       - name: Retag bundle for Docker Hub
         run: |
           sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
