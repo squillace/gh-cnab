@@ -25,12 +25,13 @@ jobs:
       with:
         login-server: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GCHR_PASSWORD }} #${{ github.token }} #
+        password: ${{ secrets.GHCR_USERNAME }} #${{ github.token }} #
     - name: Porter Publish
       run: porter publish  
 
   porter-build-docker:
 
+    needs: porter-build-ghcr
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
