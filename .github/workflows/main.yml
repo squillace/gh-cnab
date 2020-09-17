@@ -22,16 +22,16 @@ jobs:
 
     - name: Setup Porter
       uses: deislabs/porter-gh-action@v0.1.1
-#    - name: Pull in jq mixin
-#      run: porter mixins install jq --url https://github.com/squillace/porter-jq/releases/download --version v0.1.0
-#    - uses: azure/docker-login@v1
-#      name: GHCR.IO Login
-#      with:
+    - name: Pull in jq mixin
+      run: porter mixins install jq --url https://github.com/squillace/porter-jq/releases/download --version v0.1.0
+    - uses: azure/docker-login@v1
+      name: GHCR.IO Login
+      with:
 #        login-server: ghcr.io
-#        username: ${{ github.actor }}
-#        password: ${{ secrets.GHCR_PASSWORD }} #${{ github.token }} #
-#    - name: Porter Publish
-#      run: porter publish  
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }} #${{ github.token }} #
+    - name: Porter Publish
+      run: porter publish  
     
     - name: Retag bundle for Docker Hub
       run: |
@@ -39,17 +39,4 @@ jobs:
         grep "tag" porter.yaml
 #        docker logout
 
-    - name: checking dockerfile
-      run: docker image ls
-    - name: Porter BUILD
-      run: porter build --debug
-    - name: checking again
-      run: docker image ls
-    - uses: azure/docker-login@v1
-      name: Docker Login
-      with:
-        login-server: ghcr.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Porter Docker Publish
-      run: Porter publish
+
