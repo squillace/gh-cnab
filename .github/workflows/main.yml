@@ -48,7 +48,7 @@ jobs:
     - name: checking dockerfile
       run: docker image ls
     - name: Porter Publish
-      run: porter publish  
+      run: porter publish --debug
     - name: checking again
       run: docker image ls
 
