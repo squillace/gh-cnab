@@ -13,44 +13,40 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  porter-build-ghcr:
-
+  push_to_registries:
+    name: Push to 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Porter
-      uses: deislabs/porter-gh-action@v0.1.1
-    - uses: azure/docker-login@v1
-      name: ghcr Login
-      with:
-        login-server: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GHCR_USERNAME }} #${{ github.token }} #
-    - name: Porter Publish
-      run: porter publish  
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_PASSWORD }}
+      - name: Setup Porter
+        uses: deislabs/porter-gh-action@v0.1.1
+      - name: Porter Publish
+        run: porter publish  
 
-  porter-build-docker:
+      - uses: actions/checkout@v1
+      - name: Retag bundle for Docker Hub
+        run: |
+          sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
+          grep "tag" porter.yaml
+        uses: docker/login-action@v1
+        with:
 
-    needs: porter-build-ghcr
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Retag bundle for Docker Hub
-      run: |
-        sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
-        grep "tag" porter.yaml
-    - name: Setup Porter
-      uses: deislabs/porter-gh-action@v0.1.1
-    - name: Pull in jq mixin
-      run: porter mixins install jq --url https://github.com/squillace/porter-jq/releases/download --version v0.1.0
-    - uses: azure/docker-login@v1
-      name: DockerHub Login
-      with:
-#        login-server: ghcr.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }} #${{ github.token }} #
-    - name: Porter Publish
-      run: porter publish  
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Porter Publish
+        run: porter publish  
+
+
+
+
+
     
 
 
