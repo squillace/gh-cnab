@@ -45,6 +45,8 @@ jobs:
         login-server: ghcr.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: checking dockerfile
+      run: docker image ls
     - name: Porter Publish
       run: porter publish  
 
