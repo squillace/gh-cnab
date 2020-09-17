@@ -30,8 +30,8 @@ jobs:
         login-server: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GHCR_PASSWORD }} #${{ github.token }} #
-    - name: Porter Publish
-      run: porter publish  
+#    - name: Porter Publish
+#      run: porter publish  
     
     - name: Retag bundle for Docker Hub
       run: |
@@ -48,7 +48,7 @@ jobs:
     - name: checking dockerfile
       run: docker image ls
     - name: Porter Publish
-      run: porter publish --debug
+      run: porter build --debug
     - name: checking again
       run: docker image ls
 
