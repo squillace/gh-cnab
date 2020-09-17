@@ -6,7 +6,7 @@
 name: HELLO
 version: 0.1.0
 description: "An example Porter configuration"
-tag: ghcr.io/squillace/gh-cnab/test:latest
+tag: squillace/test:latest
 
 # Uncomment the line below to use a template Dockerfile for your invocation image
 #dockerfile: Dockerfile.tmpl

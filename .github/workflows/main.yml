@@ -28,8 +28,8 @@ jobs:
       name: GHCR.IO Login
       with:
         login-server: ghcr.io
-        username: ${{ secrets.GHCR_USERNAME }}
-        password: ${{ secrets.GHCR_PASSWORD }}
+        username: ${{ secrets.GITHUB_ACTOR }}
+        password: ${{ secrets.GITHUB_TOKEN }} #${{ secrets.GHCR_PASSWORD }}
     - name: Porter Publish
       run: porter publish  
     
