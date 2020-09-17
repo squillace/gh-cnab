@@ -19,7 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-
+    - name: Retag bundle for Docker Hub
+      run: |
+        sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
+        grep "tag" porter.yaml
     - name: Setup Porter
       uses: deislabs/porter-gh-action@v0.1.1
     - name: Pull in jq mixin
@@ -33,10 +36,7 @@ jobs:
     - name: Porter Publish
       run: porter publish  
     
-    - name: Retag bundle for Docker Hub
-      run: |
-        sed -i.bu 's/ghcr.io\/squillace\/gh-cnab\//squillace\//g' ./porter.yaml
-        grep "tag" porter.yaml
+
 #        docker logout
 
 
