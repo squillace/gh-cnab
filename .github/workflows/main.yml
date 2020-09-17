@@ -13,8 +13,23 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
+  porter-build-ghcr:
 
-  porter-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Porter
+      uses: deislabs/porter-gh-action@v0.1.1
+    - uses: azure/docker-login@v1
+      name: ghcr Login
+      with:
+        login-server: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GCHR_PASSWORD }} #${{ github.token }} #
+    - name: Porter Publish
+      run: porter publish  
+
+  porter-build-docker:
 
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +43,7 @@ jobs:
     - name: Pull in jq mixin
       run: porter mixins install jq --url https://github.com/squillace/porter-jq/releases/download --version v0.1.0
     - uses: azure/docker-login@v1
-      name: GHCR.IO Login
+      name: DockerHub Login
       with:
 #        login-server: ghcr.io
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -36,6 +51,7 @@ jobs:
     - name: Porter Publish
       run: porter publish  
     
+
 
 #        docker logout
 
