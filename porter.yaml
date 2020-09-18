@@ -4,7 +4,7 @@
 # Uncomment out the sections below to take full advantage of what Porter can do!
 
 name: HELLO
-version: 0.1.0
+version: 0.1.1
 description: "An example Porter configuration"
 tag: ghcr.io/squillace/gh-cnab/test:latest
 
